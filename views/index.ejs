@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meu Site Node.js</title>
+  <link rel="stylesheet" href="/styles.css"> <!-- opcional -->
+</head>
+<body>
+  <h1>Bem-vindo ao Meu Site!</h1>
+
+  <form action="/" method="POST">
+    <label for="nome">Digite seu nome:</label>
+    <input type="text" id="nome" name="nome" required>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <% if (nome) { %>
+    <h2>Olá, <%= nome %>!</h2>
+  <% } %>
+
+  <nav>
+    <a href="/about">Sobre</a>
+  </nav>
+</body>
+</html>

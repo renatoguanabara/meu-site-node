@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Meu Site Node.js</title>
+  <link rel="stylesheet" href="/styles.css"> <!-- opcional -->
+</head>
+<body>
+  <h1>Welcome!</h1>
+  <h2>Are you looking for some help to plan your vacation? You've just found it here.</h2>
+
+  <!-- Formulário para escolher o país -->
+  <form action="/travelDataPage" method="POST">
+    <label for="country">Escolha um país:</label>
+    <select name="country" id="country">
+      <option value="Brasil">Brasil</option>
+      <option value="Portugal">Portugal</option>
+      <option value="Japão">Japão</option>
+    </select>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <!-- Exibe a mensagem gerada a partir do país escolhido -->
+  <% if (mensagem) { %>
+    <p><%= mensagem %></p>
+  <% } %>
+
+  <!-- Exibe o país escolhido -->
+  <% if (country) { %>
+    <p>Você escolheu: <%= country %></p>
+  <% } %>
+
+  <!-- Formulário para destino -->
+  <form action="/travelDataPage" method="POST">
+    <label for="destiny">Where will you go?</label>
+    <input type="text" id="destiny" name="destiny" required>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <!-- Formulário para data de viagem -->
+  <form action="/travelDataPage" method="POST">
+    <label for="nome">When do you plan to travel?</label>
+    <input type="text" id="nome" name="nome" required>
+    <button type="submit">Enviar</button>
+  </form>
+
+  <!-- Exibe o destino, se fornecido -->
+  <% if (destiny) { %>
+    <h3>Olá, <%= destiny %>!</h3>
+  <% } %>
+
+  <!-- Exibe o nome (data ou outro valor), se fornecido -->
+  <% if (nome) { %>
+    <h3>Olá, <%= nome %>!</h3>
+  <% } %>
+
+  <nav>
+    <a href="/about">About</a>
+  </nav>
+</body>
+</html>
