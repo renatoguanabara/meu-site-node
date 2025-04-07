@@ -1,59 +1,48 @@
 const express = require('express');
 const path = require('path');
-console.log('Caminho absoluto para services:', path.join(__dirname, 'services', 'CreateBagagePlan.js'));
-
-// Agora, faça a importação do módulo
+const bodyParser = require('body-parser');
 const CreateBagagePlan = require('./services/CreateBagagePlan');
 
-
 const app = express();
+const PORT = 3000;
 
-// Crie uma instância da classe
-const createBagagePlan = new CreateBagagePlan();
-
-// Configura o EJS como view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-// Middleware para servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Middleware para interpretar dados de formulários (POST)
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-// Página inicial
-app.get('/', (req, res) => {
-  res.render('index', { nome: null });
-});
-
-app.post('/', (req, res) => {
-  const nome = req.body.nome;
-  res.render('index', { nome });
-});
-
-// Página sobre
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-
-// GET: exibe o formulário de viagem com campos vazios
 app.get('/travelDataPage', (req, res) => {
-  res.render('travelDataPage', { nome: null, destiny: null, date: null, country: null, mensagem: null });
+  res.render('travelDataPage', {
+    resultado: null,
+    mensagem: null,
+    city: null,
+    destiny: null,
+    nome: null
+  });
 });
 
-// POST: recebe os dados do formulário e renderiza com os valores
-app.post('/travelDataPage', (req, res) => {
-  const { nome, destiny, date, country } = req.body;
+app.post('/travelDataPage', async (req, res) => {
+  const { city, destiny, nome } = req.body;
 
-  // Cria a mensagem com base no país escolhido
-  const mensagem = createBagagePlan.createBagage(country);  // Chamando o método da classe
+  let resultado = null;
+  let mensagem = null;
 
-  // Passa a variável "mensagem" para o template
-  res.render('travelDataPage', { nome, destiny, date, country, mensagem });
+  if (city) {
+    const service = new CreateBagagePlan();
+    resultado = await service.createBagage(city, 5); // supondo 5 dias
+    mensagem = `Recomendações baseadas no país: ${city}`;
+  }
+
+  res.render('travelDataPage', {
+    resultado,
+    mensagem,
+    city: city || null,
+    destiny: destiny || null,
+    nome: nome || null
+  });
 });
 
-// Inicia o servidor
-const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
