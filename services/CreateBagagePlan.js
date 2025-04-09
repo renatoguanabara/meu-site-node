@@ -17,12 +17,13 @@ class CreateBagagePlan {
         }
       });
 
-      // Vamos pegar a temperatura média do primeiro dia
+      
       const forecastList = response.data.list.slice(0, 8); // 8 registros = 24h (de 3h em 3h)
       const temps = forecastList.map(item => item.main.temp);
       const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length;
 
       return {
+        JSON:forecastList,
         cidade: response.data.city.name,
         media: avgTemp.toFixed(1),
         clima: forecastList[0].weather[0].description
@@ -36,17 +37,31 @@ class CreateBagagePlan {
     }
   }
 
-  async createBagage(city, days) {
-    const tshirt = 0.5;
-    const pants = 0.25;
+  async createBagage(city, days, temperatura, wheater) {
+    const tshirt = 1;
+    const pants = 1;
     const bluse = 1;
+    const underware = 1;
+    const sock = 1;
+    const shoes = 1; 
+
+    
 
     let mensagem = '';
     let cidade = city;
 
     
-
+    
     const clima = await this.getWeather(cidade);
+    console.log(clima.JSON);
+
+    if(clima.media > 10 && clima.media < 20 ){
+      return `${mensagem}<br>
+      voce deve levar ${tshirt * 2} camisetas, ${pants * 1} calça <br>
+      Previsão para ${clima.cidade}: ${clima.clima}, média de ${clima.media}°C.`;
+    }  
+
+
 
     return `${mensagem}<br>
     Previsão para ${clima.cidade}: ${clima.clima}, média de ${clima.media}°C.`;

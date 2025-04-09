@@ -33,34 +33,6 @@
     </div>
   <% } %>
 
-  <!-- Formulário para destino -->
-  <form action="/travelDataPage" method="POST">
-    <label for="destiny">Where will you go?</label>
-    <input type="text" id="destiny" name="destiny" required>
-    <button type="submit">Enviar</button>
-  </form>
-
-
-  <!-- Exibe o destino, se fornecido -->
-  <% if (destiny) { %>
-    <h3>Olá, <%= destiny %>!</h3>
-  <% } %>
-
-
-
-  <!-- Formulário para data de viagem -->
-  <form action="/travelDataPage" method="POST">
-    <label for="nome">When do you plan to travel?</label>
-    <input type="text" id="nome" name="nome" required>
-    <button type="submit">Enviar</button>
-  </form>
-
-  
-
-  <!-- Exibe o nome (data ou outro valor), se fornecido -->
-  <% if (nome) { %>
-    <h3>Olá, <%= nome %>!</h3>
-  <% } %>
 
   <nav>
     <a href="/about">About</a>
