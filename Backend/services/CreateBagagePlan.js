@@ -55,24 +55,12 @@ class CreateBagagePlan {
     const clima = await this.getWeather(cidade);
     console.log(clima.JSON);
 
-    
-    if(clima.media > 0 && clima.media < 9.9 ){
-      return `${mensagem}<br>
-      voce deve levar ${tshirt * 1} camisetas para cada dois dias de viagem, ${pants * 1} calça para cada 3 dias de viagem <br>
-      Previsão para ${clima.cidade}: ${clima.clima}, média de ${clima.media}°C.`;
-    }
-    
     if(clima.media > 10 && clima.media < 20 ){
       return `${mensagem}<br>
-      voce deve levar ${tshirt * 1} camisetas para cada dia de vaigem, ${pants * 1} calça para cada dois dias de viagem <br>
+      voce deve levar ${tshirt * 2} camisetas, ${pants * 1} calça <br>
       Previsão para ${clima.cidade}: ${clima.clima}, média de ${clima.media}°C.`;
     }  
 
-    if(clima.media > 20.1 && clima.media < 60 ){
-      return `${mensagem}<br>
-      voce deve levar ${tshirt * 2} camisetas para cada 1 dia de vaigem, ${pants * 1} calça para cada 1 dia de viagem <br>
-      Previsão para ${clima.cidade}: ${clima.clima}, média de ${clima.media}°C.`;
-    }  
 
 
     return `${mensagem}<br>
